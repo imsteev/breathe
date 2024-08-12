@@ -6,6 +6,23 @@ import (
 	"time"
 )
 
+type CountDown struct {
+	to      int
+	current int
+}
+
+func (c *CountDown) Next() bool {
+	if c.current < c.to {
+		c.current++
+		return true
+	}
+	return false
+}
+
+func (c *CountDown) Reset() {
+	c.current = 0
+}
+
 func main() {
 	box := flag.Bool("box", false, "box breathe")
 	fourSevenEight := flag.Bool("478", false, "four-seven-eight breathing")
@@ -13,55 +30,75 @@ func main() {
 	flag.Parse()
 
 	if *box {
-		i := 0
+		var (
+			firstIn   = &CountDown{to: 4}
+			firstHold = &CountDown{to: 4}
+			secIn     = &CountDown{to: 4}
+			secHold   = &CountDown{to: 4}
+		)
+
+		round := 1
 		tick := time.NewTicker(1000 * time.Millisecond)
 		for range tick.C {
-			if i%16 < 4 {
+			if firstIn.Next() {
 				fmt.Print("IN (4) ")
-			} else if i%16 < 8 {
+			} else if firstHold.Next() {
 				fmt.Print("HOLD (4) ")
-			} else if i%16 < 12 {
+			} else if secIn.Next() {
 				fmt.Print("OUT (4) ")
-			} else if i%16 < 16 {
+			} else if secHold.Next() {
 				fmt.Print("HOLD (4) ")
-			}
-			i++
-			if i%16 == 0 {
-				fmt.Printf("(end of round %d)\n\n", i/16)
+			} else {
+				fmt.Printf("(end of round %d)\n\n", round)
+				firstIn.Reset()
+				firstHold.Reset()
+				secIn.Reset()
+				secHold.Reset()
+				round++
 			}
 		}
 	}
 	if *fourSevenEight {
-		i := 0
+		var (
+			in   = &CountDown{to: 4}
+			hold = &CountDown{to: 7}
+			out  = &CountDown{to: 8}
+		)
+		round := 0
 		tick := time.NewTicker(1 * time.Second)
 		for range tick.C {
-			rem := i % 19
-			if rem < 4 {
+			if in.Next() {
 				fmt.Print("IN ")
-			} else if rem < 11 {
+			} else if hold.Next() {
 				fmt.Print("HOLD ")
-			} else if rem < 19 {
+			} else if out.Next() {
 				fmt.Print("OUT ")
-			}
-			i++
-			if i%19 == 0 {
-				fmt.Printf("(end of round %d)\n\n", i/19)
+			} else {
+				fmt.Printf("(end of round %d)\n\n", round)
+				in.Reset()
+				hold.Reset()
+				out.Reset()
+				round++
 			}
 		}
 	}
 	if *coherent {
-		i := 0
+		var (
+			in  = &CountDown{to: 5}
+			out = &CountDown{to: 5}
+		)
+		round := 0
 		tick := time.NewTicker(1 * time.Second)
 		for range tick.C {
-			rem := i % 10
-			if rem < 5 {
+			if in.Next() {
 				fmt.Print("IN ")
-			} else {
+			} else if out.Next() {
 				fmt.Print("OUT ")
-			}
-			i++
-			if i%10 == 0 {
-				fmt.Printf("(end of round %d)\n\n", i/10)
+			} else {
+				fmt.Printf("(end of round %d)\n\n", round)
+				in.Reset()
+				out.Reset()
+				round++
 			}
 		}
 	}
