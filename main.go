@@ -39,7 +39,7 @@ func main() {
 				<-tick.C
 				fmt.Printf("%s ", step)
 			}
-			fmt.Printf("(end of round %d)\n\n", round)
+			fmt.Printf("(%d)\n\n", round)
 			round++
 		}
 	}
