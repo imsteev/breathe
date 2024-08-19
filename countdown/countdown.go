@@ -1,14 +1,14 @@
 package countdown
 
-func New(to int) *CountDown {
+func New(from int) *CountDown {
 	return &CountDown{
-		to: to,
-		current: to,
+		from: from,
+		current: from,
 	}
 }
 
 type CountDown struct {
-	to      int
+	from      int
 	current int
 }
 
@@ -21,5 +21,5 @@ func (c *CountDown) Next() bool {
 }
 
 func (c *CountDown) Reset() {
-	c.current = c.to 
+	c.current = c.from
 }
