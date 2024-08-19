@@ -9,9 +9,14 @@ import (
 )
 
 func main() {
-	box := flag.Bool("box", false, "box breathe")
-	fourSevenEight := flag.Bool("478", false, "four-seven-eight breathing")
-	coherent := flag.Bool("coherent", false, "coherent breathing")
+	box := flag.Bool("box", false, 
+		`Box breathing: breathe in for 4 seconds, hold for 4 seconds,
+exhale for 4 seconds, hold for 4 seconds`)
+	fourSevenEight := flag.Bool("478", false, 
+		`4-7-8 breathing: breathe in for 4 seconds, hold for 7 seconds, exhale for 8 seconds.
+Good for activating parasympathetic nervous system (aka, relaxation)`)
+	coherent := flag.Bool("coherent", false,
+		`Coherent breathing`)
 	flag.Parse()
 
 	if *box {
@@ -90,13 +95,4 @@ func main() {
 			}
 		}
 	}
-	if !*box && !*fourSevenEight && !*coherent {
-		fmt.Println(`
-Box breathing: breathe in for 4 seconds, hold for 4 seconds,
-exhale for 4 seconds, hold for 4 seconds.
-
-4-7-8: breathe in for 4 seconds, hold for 7 seconds, exhale for 8 seconds.
-Good for activating parasympathetic nervous system (aka, relaxation)
-
-Coherent breathing: inhale and exhale, circularly, for 5.5 seconds each way.`)}
 }
