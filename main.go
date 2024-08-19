@@ -76,7 +76,7 @@ func main() {
 			out = countdown.New(5)
 		)
 		round := 0
-		tick := time.NewTicker(1 * time.Second)
+		tick := time.NewTicker(1100 * time.Millisecond)
 		for range tick.C {
 			if in.Next() {
 				fmt.Print("IN ")
