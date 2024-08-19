@@ -30,13 +30,13 @@ func main() {
 		for {
 			for range tick.C {
 				if firstIn.Next() {
-					fmt.Print("IN (4) ")
+					fmt.Print("IN ")
 				} else if firstHold.Next() {
-					fmt.Print("HOLD (4) ")
+					fmt.Print("HOLD ")
 				} else if secIn.Next() {
-					fmt.Print("OUT (4) ")
+					fmt.Print("OUT ")
 				} else if secHold.Next() {
-					fmt.Print("HOLD (4) ")
+					fmt.Print("HOLD ")
 				} else {
 					break
 				}
@@ -55,22 +55,25 @@ func main() {
 			hold = countdown.New(7)
 			out  = countdown.New(8)
 		)
-		round := 0
+		round := 1
 		tick := time.NewTicker(1 * time.Second)
-		for range tick.C {
-			if in.Next() {
-				fmt.Print("IN ")
-			} else if hold.Next() {
-				fmt.Print("HOLD ")
-			} else if out.Next() {
-				fmt.Print("OUT ")
-			} else {
-				fmt.Printf("(end of round %d)\n\n", round)
-				in.Reset()
-				hold.Reset()
-				out.Reset()
-				round++
+		for {
+			for range tick.C {
+				if in.Next() {
+					fmt.Print("IN ")
+				} else if hold.Next() {
+					fmt.Print("HOLD ")
+				} else if out.Next() {
+					fmt.Print("OUT ")
+				} else {
+					break
+				}
 			}
+			fmt.Printf("(end of round %d)\n\n", round)
+			in.Reset()
+			hold.Reset()
+			out.Reset()
+			round++
 		}
 	}
 	if *coherent {
@@ -78,19 +81,22 @@ func main() {
 			in  = countdown.New(5)
 			out = countdown.New(5)
 		)
-		round := 0
+		round := 1
 		tick := time.NewTicker(1100 * time.Millisecond)
-		for range tick.C {
-			if in.Next() {
-				fmt.Print("IN ")
-			} else if out.Next() {
-				fmt.Print("OUT ")
-			} else {
-				fmt.Printf("(end of round %d)\n\n", round)
-				in.Reset()
-				out.Reset()
-				round++
+		for {
+			for range tick.C {
+				if in.Next() {
+					fmt.Print("IN ")
+				} else if out.Next() {
+					fmt.Print("OUT ")
+				} else {
+					break
+				}
 			}
+			fmt.Printf("(end of round %d)\n\n", round)
+			in.Reset()
+			out.Reset()
+			round++
 		}
 	}
 }
