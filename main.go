@@ -90,4 +90,13 @@ func main() {
 			}
 		}
 	}
+	if !*box && !*fourSevenEight && !*coherent {
+		fmt.Println(`
+Box breathing: breathe in for 4 seconds, hold for 4 seconds,
+exhale for 4 seconds, hold for 4 seconds.
+
+4-7-8: breathe in for 4 seconds, hold for 7 seconds, exhale for 8 seconds.
+Good for activating parasympathetic nervous system (aka, relaxation)
+
+Coherent breathing: inhale and exhale, circularly, for 5.5 seconds each way.`)}
 }
