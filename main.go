@@ -15,39 +15,23 @@ func main() {
 
 	flag.Parse()
 
-	if *box {
-		sequence := []string{"IN", ".", ".", ".", "HOLD", ".", ".", ".", "OUT", ".", ".", ".", "HOLD", ".", ".", "."}
+	var sequence []string
+	rate := 1 * time.Second // default
 
-		round := 1
-		tick := time.NewTicker(1000 * time.Millisecond)
-		for {
-			for _, step := range sequence {
-				<-tick.C
-				fmt.Printf("%s ", step)
-			}
-			fmt.Printf("(end of round %d)\n\n", round)
-			round++
-		}
+	if *box {
+		sequence = []string{"IN", ".", ".", ".", "HOLD", ".", ".", ".", "OUT", ".", ".", ".", "HOLD", ".", ".", "."}
+
 	}
 	if *fourSevenEight {
-		sequence := []string{"IN", ".", ".", ".", "HOLD", ".", ".", ".", ".", ".", ".", "OUT", ".", ".", ".", ".", ".", ".", "."}
-
-		round := 1
-		tick := time.NewTicker(1000 * time.Millisecond)
-		for {
-			for _, step := range sequence {
-				<-tick.C
-				fmt.Printf("%s ", step)
-			}
-			fmt.Printf("(end of round %d)\n\n", round)
-			round++
-		}
+		sequence = []string{"IN", ".", ".", ".", "HOLD", ".", ".", ".", ".", ".", ".", "OUT", ".", ".", ".", ".", ".", ".", "."}
 	}
 	if *coherent {
-		sequence := []string{"IN", ".", ".", ".", ".", "OUT", ".", ".", ".", "."}
-
+		sequence = []string{"IN", ".", ".", ".", ".", "OUT", ".", ".", ".", "."}
+		rate = 1100 * time.Millisecond
+	}
+	if *box || *fourSevenEight || *coherent {
 		round := 1
-		tick := time.NewTicker(1100 * time.Millisecond)
+		tick := time.NewTicker(rate)
 		for {
 			for _, step := range sequence {
 				<-tick.C
