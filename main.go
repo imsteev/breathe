@@ -9,22 +9,20 @@ import (
 )
 
 func main() {
-	box := flag.Bool("box", false, 
-		`Box breathing: breathe in for 4 seconds, hold for 4 seconds,
-exhale for 4 seconds, hold for 4 seconds`)
-	fourSevenEight := flag.Bool("478", false, 
-		`4-7-8 breathing: breathe in for 4 seconds, hold for 7 seconds, exhale for 8 seconds.
-Good for activating parasympathetic nervous system (aka, relaxation)`)
-	coherent := flag.Bool("coherent", false,
-		`Coherent breathing`)
+	var (
+		box            = flag.Bool("box", false, "Box breathing: in 4s, hold 4s, out 4s, hold 4s")
+		fourSevenEight = flag.Bool("478", false, "4-7-8 breathing: in 4s, hold 7s, out 8s. Triggers parasympathetic nervous system (aka, good for relaxation)")
+		coherent       = flag.Bool("coh", false, "Coherent breathing: in 5.5s, out 5.5s. Try to make it as circular as possible")
+	)
+
 	flag.Parse()
 
 	if *box {
 		var (
-			firstIn   = countdown.New(4) 
-			firstHold = countdown.New(4) 
-			secIn     = countdown.New(4) 
-			secHold   = countdown.New(4) 
+			firstIn   = countdown.New(4)
+			firstHold = countdown.New(4)
+			secIn     = countdown.New(4)
+			secHold   = countdown.New(4)
 		)
 
 		round := 1
@@ -53,7 +51,7 @@ Good for activating parasympathetic nervous system (aka, relaxation)`)
 	}
 	if *fourSevenEight {
 		var (
-			in   = countdown.New(4) 
+			in   = countdown.New(4)
 			hold = countdown.New(7)
 			out  = countdown.New(8)
 		)
