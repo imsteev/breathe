@@ -20,15 +20,17 @@ func main() {
 
 	if *box {
 		sequence = []string{"IN", ".", ".", ".", "HOLD", ".", ".", ".", "OUT", ".", ".", ".", "HOLD", ".", ".", "."}
-
 	}
+
 	if *fourSevenEight {
 		sequence = []string{"IN", ".", ".", ".", "HOLD", ".", ".", ".", ".", ".", ".", "OUT", ".", ".", ".", ".", ".", ".", "."}
 	}
+
 	if *coherent {
 		sequence = []string{"IN", ".", ".", ".", ".", "OUT", ".", ".", ".", "."}
 		rate = 1100 * time.Millisecond
 	}
+
 	if *box || *fourSevenEight || *coherent {
 		round := 1
 		tick := time.NewTicker(rate)
