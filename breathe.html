@@ -1,5 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<body>
-</body>
+    <head>
+        <!-- TODO: serve this as a source file instead of CDN -->
+        <script
+            src="https://unpkg.com/htmx.org@2.0.2"
+            integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <style>
+        .links {
+            margin-inline: auto;
+            width: fit-content;
+        }
+
+        #breathing-technique {
+            width: fit-content;
+            margin-inline: auto;
+            margin-top: 120px;
+        }
+
+        #box {
+            width: 200px;
+            height: 200px;
+            background-color: #3498db;
+            border-radius: 50%;
+            animation: pulseBoxBreathing 16s infinite ease-in-out;
+        }
+
+        @keyframes pulseBoxBreathing {
+            0% {
+                transform: scale(1);
+                background-color: #3498db; /* Blue */
+            }
+            25% {
+                transform: scale(1.5);
+                background-color: #e74c3c; /* Red */
+            }
+            50% {
+                transform: scale(1.5);
+                background-color: #e74c3c; /* Red */
+            }
+            75% {
+                transform: scale(1);
+                background-color: #3498db; /* Blue */
+            }
+            100% {
+                transform: scale(1);
+                background-color: #3498db; /* Blue */
+            }
+        }
+
+        #fourSevenEight {
+            width: 200px;
+            height: 200px;
+            background-color: #3498db;
+            border-radius: 50%;
+            animation: pulse478Breathing 16s infinite ease-in-out;
+        }
+
+        @keyframes pulse478Breathing {
+            0% {
+                transform: scale(1);
+            }
+            21.05% {
+                /* 4 seconds of expanding */
+                transform: scale(1.5);
+            }
+            57.89% {
+                /* 7 seconds of holding */
+                transform: scale(1.5);
+            }
+            100% {
+                /* 8 seconds of deflating */
+                transform: scale(1);
+            }
+        }
+
+        #coherent {
+            width: 200px;
+            height: 200px;
+            background-color: #3498db;
+            border-radius: 50%;
+            animation: pulseCoherentBreathing 11s infinite ease-in-out;
+        }
+
+        @keyframes pulseCoherentBreathing {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+    <body hx-boost="true">
+        <div class="links">
+            <a href="/box" hx-target="#breathing-technique">box</a>
+            <a href="/478" hx-target="#breathing-technique">478</a>
+            <a href="/coh" hx-target="#breathing-technique">coherent</a>
+        </div>
+        <div id="breathing-technique"></div>
+    </body>
 </html>

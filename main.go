@@ -52,23 +52,37 @@ func main() {
 	if *ui {
 		// WIP
 		http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-			tmpl := `
-			<!DOCTYPE html>
-			<html>
-			<body>
-			<div>
-			box | 478 | coherent
-			</div>
-			</body>
-			</html>
-			`
-			t, err := template.New("breathe").Parse(tmpl)
+			t, err := template.ParseFiles("breathe.html")
 			if err != nil {
-				log.Fatalf("err: %s", err)
+				log.Fatalf("err: %v", err)
 			}
 			t.Execute(w, nil)
 		})
-		fmt.Println("view breathing exercises at: localhost:3000")
+		http.HandleFunc("/box", func(w http.ResponseWriter, req *http.Request) {
+			w.Header().Add("Content-Type", "text/html")
+			t, err := template.New("breathing-technique").Parse(`<div id="box"></div>`)
+			if err != nil {
+				log.Fatal(err)
+			}
+			t.Execute(w, nil)
+		})
+		http.HandleFunc("/478", func(w http.ResponseWriter, req *http.Request) {
+			w.Header().Add("Content-Type", "text/html")
+			t, err := template.New("breathing-technique").Parse(`<div id="fourSevenEight"></div>`)
+			if err != nil {
+				log.Fatal(err)
+			}
+			t.Execute(w, nil)
+		})
+		http.HandleFunc("/coh", func(w http.ResponseWriter, req *http.Request) {
+			w.Header().Add("Content-Type", "text/html")
+			t, err := template.New("breathing-technique").Parse(`<div id="coherent"></div>`)
+			if err != nil {
+				log.Fatal(err)
+			}
+			t.Execute(w, nil)
+		})
+		fmt.Println("view breathing exercises at: http://localhost:3000")
 		if err := http.ListenAndServe(":3000", nil); err != nil {
 			log.Fatalf("error serving: %s", err)
 		}
