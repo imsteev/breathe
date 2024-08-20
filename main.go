@@ -3,17 +3,46 @@ package main
 import (
 	"flag"
 	"fmt"
+	"html/template"
+	"log"
+	"net/http"
 	"time"
 )
 
 func main() {
 	var (
+		ui             = flag.Bool("ui", false, "optional HTML interface")
 		box            = flag.Bool("box", false, "Box breathing: in 4s, hold 4s, out 4s, hold 4s")
 		fourSevenEight = flag.Bool("478", false, "4-7-8 breathing: in 4s, hold 7s, out 8s. Triggers parasympathetic nervous system (aka, good for relaxation)")
 		coherent       = flag.Bool("coh", false, "Coherent breathing: in 5.5s, out 5.5s. Try to make it as circular as possible")
 	)
 
 	flag.Parse()
+
+	if *ui {
+		// WIP
+		http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+			tmpl := `
+			<!DOCTYPE html>
+			<html>
+			<body>
+			<div>
+			box | 478 | coherent
+			</div>
+			</body>
+			</html>
+			`
+			t, err := template.New("breathe").Parse(tmpl)
+			if err != nil {
+				log.Fatalf("err: %s", err)
+			}
+			t.Execute(w, nil)
+		})
+		fmt.Println("view breathing exercises at: localhost:3000")
+		if err := http.ListenAndServe(":3000", nil); err != nil {
+			log.Fatalf("error serving: %s", err)
+		}
+	}
 
 	var sequence []string
 	rate := 1 * time.Second // default
